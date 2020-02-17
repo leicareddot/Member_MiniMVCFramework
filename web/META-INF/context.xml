@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <Resource name="jdbc/knou" auth="Container" type="javax.sql.DataSource"
+              maxActive="10" maxIdle="3" maxWait="10000"
+              username="butterfield" password="1234"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3307/knou"
+              closeMethod="close" />
+</Context>
