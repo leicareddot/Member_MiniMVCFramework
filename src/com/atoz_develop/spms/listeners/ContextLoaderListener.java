@@ -1,5 +1,6 @@
 package com.atoz_develop.spms.listeners;
 
+import com.atoz_develop.spms.controls.*;
 import com.atoz_develop.spms.dao.StudentDao;
 
 import javax.naming.InitialContext;
@@ -35,8 +36,13 @@ public class ContextLoaderListener implements ServletContextListener {
             StudentDao studentDao = new StudentDao();
             studentDao.setDataSource(ds);
 
-            // Dao 저장
-            sc.setAttribute("studentDao", studentDao);
+            // PageController 객체를 생성하고 StudentDao를 주입하여 ServletContext에 저장
+            sc.setAttribute("/auth/login.do", new LogInController().setStudentDao(studentDao));
+            sc.setAttribute("/auth/logout.do", new LogOutController());
+            sc.setAttribute("/student/list.do", new StudentListController().setStudentDao(studentDao));
+            sc.setAttribute("/student/add.do", new StudentAddController().setStudentDao(studentDao));
+            sc.setAttribute("/student/update.do", new StudentUpdateController().setStudentDao(studentDao));
+            sc.setAttribute("/student/delete.do", new StudentDeleteController().setStudentDao(studentDao));
         } catch (NamingException e) {
             e.printStackTrace();
         }
