@@ -7,5 +7,5 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div style="background-color: darkcyan; height: 20px; padding: 5px; margin-top: 10px;">
-    SPMS &copy; 2020 &copy;
+    SPMS &copy; 2020
 </div>

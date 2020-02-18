@@ -22,9 +22,9 @@
     전화번호: <input type='text' name='phone_number' value='${requestScope.student.phoneNumber}'><br>
     주소: <input type='text' name='address' value='${requestScope.student.address}'><br>
     <input type='submit' value='수정'>
-    <input type="button" value="삭제" onClick="location.href='delete?student_no=${student.studentNo}'"
+    <input type="button" value="삭제" onClick="location.href='delete.do?student_no=${student.studentNo}'"
            style="display: ${'admin' eq sessionScope.student.studentNo ? inline-block : none}">
-    <input type='button' value='취소' onClick='location.href="list"'>
+    <input type='button' value='취소' onClick='location.href="list.do"'>
 </form>
 </body>
 </html>
