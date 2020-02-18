@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta http-equiv="Refresh" content="3; url=login">
+    <meta http-equiv="Refresh" content="3; url=login.do">
     <title>로그인 실패</title>
 </head>
 <body>

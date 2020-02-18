@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 로그아웃
+ */
 @WebServlet("/auth/logout")
 public class LogOutServlet extends HttpServlet {
     @Override
@@ -15,6 +18,7 @@ public class LogOutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.invalidate();
 
-        resp.sendRedirect("login");
+        // Redirect
+        req.setAttribute("viewUrl", "redirect:login.do");
     }
 }

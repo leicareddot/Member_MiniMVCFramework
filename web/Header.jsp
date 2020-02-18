@@ -6,19 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<jsp:useBean id="student" scope="session" class="com.atoz_develop.spms.vo.Student" />--%>
-<%
-    Student student = (Student) session.getAttribute("student");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div style="background-color: darkcyan; color: aliceblue; height: 20px; padding: 5px;">
     SPMS
-    <% if(student == null) { %>
     <span style="float: right;">
-        <a style="color: white;" href="<%=request.getContextPath()%>/auth/login">로그인</a>
+    <c:choose>
+        <c:when test="${empty sessionScope.student}">
+                <a style="color: white;" href="../auth/login.do">로그인</a>
+            </span>
+        </c:when>
+        <c:otherwise>
+                ${sessionScope.student.studentName}
+                <a style="color: white;" href="../auth/logout.do">로그아웃</a>
+        </c:otherwise>
+    </c:choose>
     </span>
-    <% } else {%>
-    <span style="float: right;"><%=student.getStudentName()%>
-        <a style="color: white;" href="<%=request.getContextPath()%>/auth/logout">로그아웃</a>
-    </span>
-    <% } %>
 </div>

@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * 학생 목록 조회
+ */
 @WebServlet("/student/list")
 public class StudentListServlet extends HttpServlet {
     @Override
@@ -20,15 +23,11 @@ public class StudentListServlet extends HttpServlet {
             ServletContext sc = this.getServletContext();
             req.setAttribute("students", ((StudentDao) sc.getAttribute("studentDao")).selectList());
 
-            resp.setContentType("text/html; charset=UTF-8");
-            RequestDispatcher rd = req.getRequestDispatcher(
-                    "/student/StudentList.jsp"
-            );
-            rd.include(req, resp);
+            // FrontController에게 알려줄 JSP URL 정보 저장
+            req.setAttribute("viewUrl", "/student/StudentList.jsp");
         } catch (SQLException e) {
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
-            rd.forward(req, resp);
+            // Dao 실행 중 예외 발생 시 ServletException 객체에 담아 던짐
+            throw new ServletException(e);
         }
     }
 }

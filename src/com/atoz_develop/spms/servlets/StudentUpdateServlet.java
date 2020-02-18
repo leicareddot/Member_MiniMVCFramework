@@ -3,7 +3,6 @@ package com.atoz_develop.spms.servlets;
 import com.atoz_develop.spms.dao.StudentDao;
 import com.atoz_develop.spms.vo.Student;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * 학생 상세 정보 조회 및 수정
+ */
 @WebServlet("/student/update")
 public class StudentUpdateServlet extends HttpServlet {
     @Override
@@ -21,12 +23,9 @@ public class StudentUpdateServlet extends HttpServlet {
             ServletContext sc = this.getServletContext();
 
             req.setAttribute("student", ((StudentDao) sc.getAttribute("studentDao")).selectOne(req.getParameter("student_no")));
-            RequestDispatcher rd = req.getRequestDispatcher("StudentUpdateForm.jsp");
-            rd.forward(req, resp);
+            req.setAttribute("viewUrl", "/student/StudentUpdateForm.jsp");
         } catch (SQLException e) {
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
-            rd.forward(req, resp);
+            throw new ServletException(e);
         }
     }
 
@@ -35,16 +34,10 @@ public class StudentUpdateServlet extends HttpServlet {
         ServletContext sc = this.getServletContext();
 
         try {
-            int result = ((StudentDao) sc.getAttribute("studentDao")).update(new Student()
-                .setDepartment(req.getParameter("department"))
-                    .setStudentName(req.getParameter("student_name"))
-                    .setPhoneNumber(req.getParameter("phone_number"))
-                    .setAddress(req.getParameter("address"))
-                    .setStudentNo(req.getParameter("student_no"))
-            );
+            int result = ((StudentDao) sc.getAttribute("studentDao")).update((Student) req.getAttribute("student"));
 
             if(result == 1)
-                resp.sendRedirect("list");
+                req.setAttribute("viewUrl", "redirect:list.do");
             else
                 throw new SQLException();
         } catch (SQLException e) {

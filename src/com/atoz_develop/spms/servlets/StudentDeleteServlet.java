@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * 학생 삭제
+ */
 @WebServlet("/student/delete")
 public class StudentDeleteServlet extends HttpServlet {
 
@@ -21,16 +24,10 @@ public class StudentDeleteServlet extends HttpServlet {
 
         try {
             int result = ((StudentDao) sc.getAttribute("studentDao")).delete(req.getParameter("student_no"));
-
-            if(result > 0) {
-                resp.sendRedirect("list");
-            } else {
-                throw new SQLException();
-            }
+            if(result > 0) req.setAttribute("viewUrl", "redirect:list.do");
+            else throw new SQLException();
         } catch (SQLException e) {
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
-            rd.forward(req, resp);
+            throw new ServletException(e);
         }
     }
 }

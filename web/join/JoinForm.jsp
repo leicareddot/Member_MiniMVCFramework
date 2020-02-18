@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>신규 학생 등록</h1>
-<form action='add' method='post'>
+<form action='add.do' method='post'>
     학번 : <input type='text' name='student_no'><br>
     이름 : <input type='text' name='student_name'><br>
     비밀번호 : <input type='password' name='password'><br>

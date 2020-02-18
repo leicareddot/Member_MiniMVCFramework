@@ -91,4 +91,10 @@ public class Student {
         this.password = password;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return studentNo + ", " + studentName + ", " + department + ", " + grade + ", " + gender + ", " + age + ", " + phoneNumber + ", " +
+                address + ", " + password;
+    }
 }

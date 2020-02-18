@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>학생정보</h1>
-<form action='update' method='post'>
+<form action='update.do' method='post'>
     학번: <input type='text' name='student_no' value='${requestScope.student.studentNo}' readonly><br>
     학과: <input type='text' name='department' value='${requestScope.student.department}'><br>
     이름: <input type='text' name='student_name' value='${requestScope.student.studentName}'><br>
