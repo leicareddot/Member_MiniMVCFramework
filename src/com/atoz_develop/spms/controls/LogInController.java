@@ -1,20 +1,20 @@
 package com.atoz_develop.spms.controls;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 public class LogInController implements Controller {
-    StudentDao studentDao;
+    MySqlStudentDao studentDao;
 
     /**
      * StudentDao를 주입받기 위한 setter()
      * @param studentDao
      * @return LogInController
      */
-    public LogInController setStudentDao(StudentDao studentDao) {
+    public LogInController setStudentDao(MySqlStudentDao studentDao) {
         this.studentDao = studentDao;
         return this;
     }

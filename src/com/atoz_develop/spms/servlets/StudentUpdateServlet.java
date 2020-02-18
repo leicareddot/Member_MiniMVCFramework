@@ -1,6 +1,6 @@
 package com.atoz_develop.spms.servlets;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
 
 import javax.servlet.ServletContext;
@@ -22,7 +22,7 @@ public class StudentUpdateServlet extends HttpServlet {
         try {
             ServletContext sc = this.getServletContext();
 
-            req.setAttribute("student", ((StudentDao) sc.getAttribute("studentDao")).selectOne(req.getParameter("student_no")));
+            req.setAttribute("student", ((MySqlStudentDao) sc.getAttribute("studentDao")).selectOne(req.getParameter("student_no")));
             req.setAttribute("viewUrl", "/student/StudentUpdateForm.jsp");
         } catch (SQLException e) {
             throw new ServletException(e);
@@ -34,7 +34,7 @@ public class StudentUpdateServlet extends HttpServlet {
         ServletContext sc = this.getServletContext();
 
         try {
-            int result = ((StudentDao) sc.getAttribute("studentDao")).update((Student) req.getAttribute("student"));
+            int result = ((MySqlStudentDao) sc.getAttribute("studentDao")).update((Student) req.getAttribute("student"));
 
             if(result == 1)
                 req.setAttribute("viewUrl", "redirect:list.do");

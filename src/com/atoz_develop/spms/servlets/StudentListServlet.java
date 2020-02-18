@@ -1,8 +1,7 @@
 package com.atoz_develop.spms.servlets;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +20,7 @@ public class StudentListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             ServletContext sc = this.getServletContext();
-            req.setAttribute("students", ((StudentDao) sc.getAttribute("studentDao")).selectList());
+            req.setAttribute("students", ((MySqlStudentDao) sc.getAttribute("studentDao")).selectList());
 
             // FrontController에게 알려줄 JSP URL 정보 저장
             req.setAttribute("viewUrl", "/student/StudentList.jsp");

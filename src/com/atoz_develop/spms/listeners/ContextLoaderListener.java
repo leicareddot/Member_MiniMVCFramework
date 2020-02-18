@@ -1,7 +1,7 @@
 package com.atoz_develop.spms.listeners;
 
 import com.atoz_develop.spms.controls.*;
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -33,7 +33,7 @@ public class ContextLoaderListener implements ServletContextListener {
             );
 
             // Dao 준비
-            StudentDao studentDao = new StudentDao();
+            MySqlStudentDao studentDao = new MySqlStudentDao();
             studentDao.setDataSource(ds);
 
             // PageController 객체를 생성하고 StudentDao를 주입하여 ServletContext에 저장

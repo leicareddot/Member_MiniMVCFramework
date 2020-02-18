@@ -1,8 +1,7 @@
 package com.atoz_develop.spms.servlets;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +22,7 @@ public class StudentDeleteServlet extends HttpServlet {
         ServletContext sc = req.getServletContext();
 
         try {
-            int result = ((StudentDao) sc.getAttribute("studentDao")).delete(req.getParameter("student_no"));
+            int result = ((MySqlStudentDao) sc.getAttribute("studentDao")).delete(req.getParameter("student_no"));
             if(result > 0) req.setAttribute("viewUrl", "redirect:list.do");
             else throw new SQLException();
         } catch (SQLException e) {

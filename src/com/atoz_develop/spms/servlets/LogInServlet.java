@@ -1,6 +1,6 @@
 package com.atoz_develop.spms.servlets;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
 
 import javax.servlet.ServletContext;
@@ -34,7 +34,7 @@ public class LogInServlet extends HttpServlet {
         ServletContext sc = req.getServletContext();
 
         try {
-            Student student = ((StudentDao) sc.getAttribute("studentDao")).exist(req.getParameter("student_no"), req.getParameter("password"));
+            Student student = ((MySqlStudentDao) sc.getAttribute("studentDao")).exist(req.getParameter("student_no"), req.getParameter("password"));
             if (student != null) {
                 // HttpSession에 저장
                 HttpSession session = req.getSession();

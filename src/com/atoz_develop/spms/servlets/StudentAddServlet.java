@@ -1,6 +1,6 @@
 package com.atoz_develop.spms.servlets;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
 
 import javax.servlet.ServletContext;
@@ -28,7 +28,7 @@ public class StudentAddServlet extends HttpServlet {
 
         try {
             // (Student) req.getAttribute("student") : FrontController가 저장해둔 Student 객체 사용
-            int result = ((StudentDao) sc.getAttribute("studentDao")).insert((Student) req.getAttribute("student"));
+            int result = ((MySqlStudentDao) sc.getAttribute("studentDao")).insert((Student) req.getAttribute("student"));
 
             if(result == 1) {
                 req.setAttribute("viewUrl", "redirect:list.do");

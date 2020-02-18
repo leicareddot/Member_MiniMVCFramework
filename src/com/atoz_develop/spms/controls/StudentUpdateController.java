@@ -1,6 +1,6 @@
 package com.atoz_develop.spms.controls;
 
-import com.atoz_develop.spms.dao.StudentDao;
+import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
 
 import java.util.Map;
@@ -9,14 +9,14 @@ import java.util.Map;
  * 학생 정보 조회 및 수정
  */
 public class StudentUpdateController implements Controller {
-    StudentDao studentDao;
+    MySqlStudentDao studentDao;
 
     /**
      * StudentDao를 주입받기 위한 setter()
      * @param studentDao
      * @return StudentUpdateController
      */
-    public StudentUpdateController setStudentDao(StudentDao studentDao) {
+    public StudentUpdateController setStudentDao(MySqlStudentDao studentDao) {
         this.studentDao = studentDao;
         return this;
     }
