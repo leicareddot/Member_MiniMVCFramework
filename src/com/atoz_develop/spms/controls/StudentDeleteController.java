@@ -1,5 +1,6 @@
 package com.atoz_develop.spms.controls;
 
+import com.atoz_develop.spms.bind.DataBinding;
 import com.atoz_develop.spms.dao.MySqlStudentDao;
 
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 /**
  * 학생 삭제
  */
-public class StudentDeleteController implements Controller {
+public class StudentDeleteController implements Controller, DataBinding {
     MySqlStudentDao studentDao;
 
     /**
@@ -18,6 +19,11 @@ public class StudentDeleteController implements Controller {
     public StudentDeleteController setStudentDao(MySqlStudentDao studentDao) {
         this.studentDao = studentDao;
         return this;
+    }
+
+    @Override
+    public Object[] getDataBinders() {
+        return new Object[]{"studentNo", String.class};
     }
 
     @Override

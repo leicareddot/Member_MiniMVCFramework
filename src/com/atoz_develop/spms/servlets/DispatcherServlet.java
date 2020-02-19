@@ -1,7 +1,8 @@
 package com.atoz_develop.spms.servlets;
 
+import com.atoz_develop.spms.bind.DataBinding;
+import com.atoz_develop.spms.bind.ServletRequestDataBinder;
 import com.atoz_develop.spms.controls.*;
-import com.atoz_develop.spms.vo.Student;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,51 +43,16 @@ public class DispatcherServlet extends HttpServlet {
             ServletContext sc = this.getServletContext();
             // FrontController - PageController 데이터 전달을 위한 Map 객체
             Map<String, Object> model = new HashMap<>();
+            model.put("session", req.getSession());
 
+            // 요청 서블릿 URL에 따라 PageController 지정
             // ServletContext에 저장돼있는 PageController 사용
             Controller pageController = (Controller) sc.getAttribute(servletPath);
 
-            // 서블릿 URL에 따라 PageController 지정 -s
-            if ("/student/add.do".equals(servletPath)) {
-                if (req.getParameter("student_no") != null) {
-                    // 매개변수값을 꺼내서 Map에 담음
-                    model.put("student", new Student()
-                            .setStudentNo(req.getParameter("student_no"))
-                            .setStudentName(req.getParameter("student_name"))
-                            .setAddress(req.getParameter("address"))
-                            .setAge(Integer.parseInt(req.getParameter("age")))
-                            .setDepartment(req.getParameter("department"))
-                            .setGender(req.getParameter("gender"))
-                            .setGrade(Integer.parseInt(req.getParameter("grade")))
-                            .setPassword(req.getParameter("password"))
-                            .setPhoneNumber(req.getParameter("phone_number"))
-                    );
-                }
-            } else if ("/student/update.do".equals(servletPath)) {
-                if (req.getParameter("student_no") != null) {
-                    // 매개변수값을 꺼내서 Map에 담음
-                    model.put("student", new Student()
-                            .setDepartment(req.getParameter("department"))
-                            .setStudentName(req.getParameter("student_name"))
-                            .setPhoneNumber(req.getParameter("phone_number"))
-                            .setAddress(req.getParameter("address"))
-                            .setStudentNo(req.getParameter("student_no")));
-                }
-            } else if ("/student/delete.do".equals(servletPath)) {
-                if (req.getParameter("student_no") != null) {
-                    model.put("studentNo", req.getParameter("student_no"));
-                }
-            } else if ("/auth/login.do".equals(servletPath)) {
-                if (req.getParameter("student_no") != null) {
-                    model.put("studentNo", req.getParameter("student_no"));
-                    model.put("password", req.getParameter("password"));
-                    model.put("session", req.getSession());
-                }
-            } else if ("/auth/logout.do".equals(servletPath)) {
-                pageController = new LogOutController();
-                model.put("session", req.getSession());
+            // DataBinding 구현 여부 확인 후 데이터를 준비하는 prepareRequestData() 호출
+            if(pageController instanceof DataBinding) {
+                prepareRequestData(req, model, (DataBinding) pageController);
             }
-            // 서블릿 URL에 따라 PageController 지정 -e
 
             // PageController에 실행 요청
             String viewUrl = pageController.execute(model);
@@ -109,6 +76,30 @@ public class DispatcherServlet extends HttpServlet {
             req.setAttribute("error", e);
             RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
             rd.forward(req, resp);
+        }
+    }
+
+    /**
+     * 데이터 준비
+     * @param request
+     * @param model
+     * @param dataBinding
+     * @throws Exception
+     */
+    private void prepareRequestData(HttpServletRequest request, Map<String, Object> model, DataBinding dataBinding) throws Exception {
+        // 필요한 데이터 확인
+        Object[] dataBinders = dataBinding.getDataBinders();
+        System.out.println("필요한 데이터 : " + Arrays.toString(dataBinders));
+        String dataName = null;
+        Class<?> dataType = null;
+        Object dataObj = null;
+
+        for(int i=0; i<dataBinders.length; i+=2) {
+            dataName = (String) dataBinders[i];
+            dataType = (Class<?>) dataBinders[i+1];
+            // dataName과 일치하는 요청 매개변수 값을 dataType 인스턴스에 저장하고 반환
+            dataObj = ServletRequestDataBinder.bind(request, dataType, dataName);
+            model.put(dataName, dataObj);
         }
     }
 }

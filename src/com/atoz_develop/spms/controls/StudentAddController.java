@@ -1,5 +1,6 @@
 package com.atoz_develop.spms.controls;
 
+import com.atoz_develop.spms.bind.DataBinding;
 import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * 신규 학생 등록
  */
-public class StudentAddController implements Controller {
+public class StudentAddController implements Controller, DataBinding {
     MySqlStudentDao studentDao;
 
     /**
@@ -21,14 +22,23 @@ public class StudentAddController implements Controller {
         return this;
     }
 
+    /**
+     * 필요한 데이터 정의
+     * @return 데이터의 이름과 타입 정보를 담은 Object[]
+     */
+    @Override
+    public Object[] getDataBinders() {
+        return new Object[]{"student", com.atoz_develop.spms.vo.Student.class};
+    }
+
     @Override
     public String execute(Map<String, Object> model) throws Exception {
-        if(model.get("student") == null) {      // Form 요청 시
+        Student student = (Student) model.get("student");
+
+        if(student.getStudentNo() == null) {      // Form 요청 시
             return "/join/JoinForm.jsp";
         } else {                                // 회원 등록 요청 시
-            Student student = (Student) model.get("student");
             studentDao.insert(student);
-
             return "redirect:/student/list.do";
         }
     }

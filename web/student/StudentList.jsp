@@ -10,11 +10,11 @@
 <p><a href="add.do">신규 학생</a></p>
 <c:forEach var="student" items="${students}">
     <c:if test="${sessionScope.student.studentNo == 'admin'}">
-        <input type="button" value="삭제" onClick="location.href='delete.do?student_no=${student.studentNo}'" />
+        <input type="button" value="삭제" onClick="location.href='delete.do?studentNo=${student.studentNo}'" />
     </c:if>
     ${student.studentNo},
     ${student.department},
-    <a href="update.do?student_no=${student.studentNo}">${student.studentName}</a>,
+    <a href="update.do?studentNo=${student.studentNo}">${student.studentName}</a>,
     ${student.grade},
     ${student.gender},
     ${student.age},
