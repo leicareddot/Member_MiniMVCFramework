@@ -14,6 +14,10 @@
 
     <!-- 컨텍스트 매개변수 -->
     <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/application-context.properties</param-value>
+    </context-param>
+    <context-param>
         <param-name>driver</param-name>
         <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </context-param>

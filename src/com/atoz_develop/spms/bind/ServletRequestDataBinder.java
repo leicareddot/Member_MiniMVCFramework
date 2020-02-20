@@ -25,9 +25,7 @@ public class ServletRequestDataBinder {
         // Primitive type이 아니면~
         // 요청 파라미터명
         Set<String> paramNames = request.getParameterMap().keySet();
-        for(String s:paramNames) {
-            System.out.println(s);
-        }
+
         // 값을 저장할 객체 생성
 //        Object dataObject = dataType.newInstance();   //deprecated
         Object dataObject = dataType.getDeclaredConstructor().newInstance();

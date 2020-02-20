@@ -2,7 +2,9 @@ package com.atoz_develop.spms.servlets;
 
 import com.atoz_develop.spms.bind.DataBinding;
 import com.atoz_develop.spms.bind.ServletRequestDataBinder;
+import com.atoz_develop.spms.context.ApplicationContext;
 import com.atoz_develop.spms.controls.*;
+import com.atoz_develop.spms.listeners.ContextLoaderListener;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -40,14 +42,18 @@ public class DispatcherServlet extends HttpServlet {
         String servletPath = req.getServletPath();
 
         try {
-            ServletContext sc = this.getServletContext();
+            ApplicationContext ctx = ContextLoaderListener.getApplicationContext();
+
             // FrontController - PageController 데이터 전달을 위한 Map 객체
             Map<String, Object> model = new HashMap<>();
             model.put("session", req.getSession());
 
             // 요청 서블릿 URL에 따라 PageController 지정
-            // ServletContext에 저장돼있는 PageController 사용
-            Controller pageController = (Controller) sc.getAttribute(servletPath);
+            // 어플리케이션 시작 시 생성된 PageController 사용
+            Controller pageController = (Controller) ctx.getBean(servletPath);
+            if (pageController == null) {
+                throw new Exception("요청한 서비스를 찾을 수 없습니다.");
+            }
 
             // DataBinding 구현 여부 확인 후 데이터를 준비하는 prepareRequestData() 호출
             if(pageController instanceof DataBinding) {
@@ -64,7 +70,7 @@ public class DispatcherServlet extends HttpServlet {
 
             // 화면 출력을 위해 ServletRequest에 보관된 뷰 URL로 실행 위임 -s
             if (viewUrl.startsWith("redirect:")) {   // redirect
-                resp.sendRedirect(sc.getContextPath() + viewUrl.substring(9));
+                resp.sendRedirect(req.getServletContext().getContextPath() + viewUrl.substring(9));
 
                 return;
             } else {    // include
@@ -89,7 +95,7 @@ public class DispatcherServlet extends HttpServlet {
     private void prepareRequestData(HttpServletRequest request, Map<String, Object> model, DataBinding dataBinding) throws Exception {
         // 필요한 데이터 확인
         Object[] dataBinders = dataBinding.getDataBinders();
-        System.out.println("필요한 데이터 : " + Arrays.toString(dataBinders));
+//        System.out.println("필요한 데이터 : " + Arrays.toString(dataBinders));
         String dataName = null;
         Class<?> dataType = null;
         Object dataObj = null;

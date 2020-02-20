@@ -1,5 +1,7 @@
 package com.atoz_develop.spms.controls;
 
+import com.atoz_develop.spms.annotation.Component;
+
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 

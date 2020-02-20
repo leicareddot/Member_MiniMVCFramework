@@ -1,5 +1,6 @@
 package com.atoz_develop.spms.dao;
 
+import com.atoz_develop.spms.annotation.Component;
 import com.atoz_develop.spms.vo.Student;
 
 import javax.sql.DataSource;

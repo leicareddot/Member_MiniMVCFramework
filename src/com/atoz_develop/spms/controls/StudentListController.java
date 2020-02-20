@@ -1,5 +1,6 @@
 package com.atoz_develop.spms.controls;
 
+import com.atoz_develop.spms.annotation.Component;
 import com.atoz_develop.spms.dao.MySqlStudentDao;
 
 import java.util.Map;
