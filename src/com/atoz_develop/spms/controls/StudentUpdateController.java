@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * 학생 정보 조회 및 수정
  */
+@Component("/student/update.do")
 public class StudentUpdateController implements Controller, DataBinding {
     MySqlStudentDao studentDao;
 

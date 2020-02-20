@@ -8,6 +8,7 @@ import java.util.Map;
 /**
  * 학생 목록 조회
  */
+@Component("/student/list.do")
 public class StudentListController implements Controller {
     MySqlStudentDao studentDao;
 

@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("studentDao")
 public class MySqlStudentDao implements StudentDao {
 
     DataSource ds;

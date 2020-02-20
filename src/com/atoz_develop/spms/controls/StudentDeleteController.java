@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * 학생 삭제
  */
+@Component("/student/delete.do")
 public class StudentDeleteController implements Controller, DataBinding {
     MySqlStudentDao studentDao;
 

@@ -8,6 +8,7 @@ import com.atoz_develop.spms.vo.Student;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+@Component("/auth/login.do")
 public class LogInController implements Controller, DataBinding {
     MySqlStudentDao studentDao;
 

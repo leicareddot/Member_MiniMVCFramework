@@ -1,5 +1,6 @@
 package com.atoz_develop.spms.controls;
 
+import com.atoz_develop.spms.annotation.Component;
 import com.atoz_develop.spms.bind.DataBinding;
 import com.atoz_develop.spms.dao.MySqlStudentDao;
 import com.atoz_develop.spms.vo.Student;
@@ -9,6 +10,7 @@ import java.util.Map;
 /**
  * 신규 학생 등록
  */
+@Component("/student/add.do")
 public class StudentAddController implements Controller, DataBinding {
     MySqlStudentDao studentDao;
 
